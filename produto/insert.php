@@ -3,12 +3,18 @@ include('../header.php');
 $tipos = $objTipo->getTipos();
 if(isset($_POST['submit']) and !empty($_POST['submit'])){
 $ret_val = $obj->insereProduto();
-if($ret_val==1){
-    echo '<script type="text/javascript">'; 
-    echo 'alert("Produto salvo com sucesso");'; 
-    echo 'window.location.href = "produtos.php";';
-    echo '</script>';
-}
+   if($ret_val==1){ ?>
+      <script type="text/javascript">
+      Swal.fire(
+        'Parabéns!',
+        'Produto salvo com sucesso!',
+        'success'
+      ).then((result) => {
+        window.location.href = "produtos.php";
+      });
+      </script>
+<?php
+   }
 }
 ?>
 <div class="container-fluid bg-3 text-center">    
