@@ -24,7 +24,7 @@ if($ret_val==1){
                <label class="control-label col-sm-2">Tipo:<span style='color:red'>*</span></label>
                <div class="col-sm-5">               
                 <select name="tipo_id" id="tipo_id" class="form-control">
-                <?php while($tipo = pg_fetch_object($tipos)): ?>
+                <?php while($tipo = $tipos->fetchObject()): ?>
                     <option value="<?=$tipo->id?>"><?=$tipo->descricao?></option>
                 <?php endwhile; ?>
                 </select> 

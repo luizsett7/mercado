@@ -4,13 +4,22 @@ $produtos = $obj->getProdutos();
 $sn=1;
 if(isset($_POST['update'])){
     $produto = $obj->getProdutoById();
-    $_SESSION['produto'] = pg_fetch_object($produto);
+    $_SESSION['produto'] = $produto->fetchObject();
     header('location:edit.php');
 }
 if(isset($_POST['delete'])){
    $ret_val = $obj->deleteProduto();   
-   if($ret_val == 1){      
-      echo "<script>alert('Registro deletado com sucesso'); window.location.reload(); </script>";
+   if($ret_val == 1){ ?>   
+      <script type="text/javascript">
+      Swal.fire(
+        'Parabéns!',
+        'Item excluído com sucesso!',
+        'success'
+      ).then((result) => {
+        window.location.href = "produtos.php";
+      });
+      </script>
+<?php
   }
 }
 ?>
@@ -33,7 +42,7 @@ if(isset($_POST['delete'])){
       </tr>
     </thead>
     <tbody>
-    <?php while($produto = pg_fetch_object($produtos)): ?>   
+    <?php while($produto = $produtos->fetchObject()): ?>   
       <tr align="left">        
         <td><?=$produto->id?></td>
         <td><?=$produto->descricao?></td>
@@ -41,7 +50,7 @@ if(isset($_POST['delete'])){
         <td>
             <form method="post">
                 <input type="submit" class="btn btn-success" name= "update" value="Editar">   
-                <input type="submit" onClick="return confirm('Confirme a exclusão');" class="btn btn-danger" name="delete" value="Deletar">
+                <!--<input type="submit" onClick="return confirm('Confirme a exclusão');" class="btn btn-danger" name="delete" value="Deletar">-->
                 <input type="hidden" value="<?=$produto->id?>" name="id">
             </form>
         </td>

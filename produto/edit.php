@@ -23,8 +23,8 @@ if($ret_val==1){
             <div class="form-group">
                <label class="control-label col-sm-2">Tipo:<span style='color:red'>*</span></label>
                <div class="col-sm-5">               
-                <select name="produto_id" id="produto_id" class="form-control">
-                <?php while($tipo = pg_fetch_object($tipos)): ?>
+                <select name="tipo_id" id="tipo_id" class="form-control">
+                <?php while($tipo = $tipos->fetchObject()): ?>
                     <option value="<?=$tipo->id;?>" <?php if($tipo->id == $produto->tipo_id){ echo "selected"; } ?>><?=$tipo->descricao?></option>
                 <?php endwhile; ?>
                 </select>

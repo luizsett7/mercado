@@ -39,7 +39,7 @@ if(isset($_POST['submit']) and !empty($_POST['submit'])){
                <label class="control-label col-sm-2">Produto:<span style='color:red'>*</span></label>
                <div class="col-sm-5">               
                 <select name="produto_id" id="produto_id" class="form-control">
-                <?php while($produto = pg_fetch_object($produtos)): ?>
+                <?php while($produto = $produtos->fetchObject()): ?>
                     <option value="<?=$produto->id?>"><?=$produto->descricao?></option>
                 <?php endwhile; ?>
                 </select> 
@@ -75,7 +75,7 @@ if(isset($_POST['submit']) and !empty($_POST['submit'])){
 <?php 
       $total_venda = 0;
       $total_imposto = 0;
-      while($item = pg_fetch_object($itens)): ?>   
+      while($item = $itens->fetchObject()): ?>   
       <tr align="left">        
         <td><?=$item->venda_id?></td>
         <td><?=$item->descricao?></td>
@@ -102,7 +102,7 @@ if(isset($_POST['submit']) and !empty($_POST['submit'])){
         <td></td>
         <td><strong>R$ <?=number_format($total_imposto,2,",",".")?></strong></td>
         <td><strong>R$ <?=number_format($total_venda,2,",",".")?></strong></td>
-        <td><strong>Total Geral: R$<?=number_format($total_venda + $total_imposto,2,",",".")?></strong></td>
+        <td><strong>Total Geral: R$ <?=number_format($total_venda + $total_imposto,2,",",".")?></strong></td>
       </tr>
     </tbody>
   </table>

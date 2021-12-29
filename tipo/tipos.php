@@ -4,14 +4,23 @@ $tipos = $objTipo->getTipos();
 $sn=1;
 if(isset($_POST['update'])){
     $tipo = $objTipo->getTipoById();
-    $_SESSION['tipo'] = pg_fetch_object($tipo);
+    $_SESSION['tipo'] = $tipo->fetchObject();
     header('location:edit.php');
 }
 if(isset($_POST['delete'])){
    $ret_val = $objTipo->deleteTipo();   
-   if($ret_val == 1){      
-      echo "<script>alert('Registro deletado com sucesso'); window.location.reload(); </script>";
-  }
+   if($ret_val == 1){ ?>   
+    <script type="text/javascript">
+    Swal.fire(
+      'Parabéns!',
+      'Item excluído com sucesso!',
+      'success'
+    ).then((result) => {
+      window.location.href = "tipos.php";
+    });
+    </script>
+<?php
+   }
 }
 ?>
 <div class="container-fluid bg-3 text-center">    
@@ -33,7 +42,7 @@ if(isset($_POST['delete'])){
       </tr>
     </thead>
     <tbody>
-    <?php while($tipo = pg_fetch_object($tipos)): ?>   
+    <?php while($tipo = $tipos->fetchObject()): ?>   
       <tr align="left">        
         <td><?=$tipo->id?></td>
         <td><?=$tipo->descricao?></td>
@@ -41,7 +50,7 @@ if(isset($_POST['delete'])){
         <td>
             <form method="post">
                 <input type="submit" class="btn btn-success" name= "update" value="Editar">   
-                <input type="submit" onClick="return confirm('Confirme a exclusão');" class="btn btn-danger" name="delete" value="Deletar">
+                <!--<input type="submit" onClick="return confirm('Confirme a exclusão');" class="btn btn-danger" name="delete" value="Deletar">-->
                 <input type="hidden" value="<?=$tipo->id?>" name="id">
             </form>
         </td>
